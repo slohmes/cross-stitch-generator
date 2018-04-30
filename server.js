@@ -7,6 +7,7 @@ const app = express();
 
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public/images'));
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(request, response) {
 	response.type('text/html');

@@ -5,6 +5,32 @@
     <title>Cross Stitch Generator</title>
     <script src="https://unpkg.com/react@15/dist/react.js"></script>
     <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+    <style>
+      @font-face {
+        font-family: 'stitchFont';
+        src: url('/goodbye-crewel-world-nf.regular.ttf');
+        format('truetype');
+      }
+      .input-box {
+        padding-bottom: 10px;
+      }
+      #cross-stitch {
+        position: relative;
+        text-align: center;
+      }
+      #cross-stitch-text {
+        font-family: 'stitchFont';
+        font-size: 50px;
+        color: #000099;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      #bg-image {
+        width:100%;
+      }
+    </style>
 </head>
 <body>
     <div id="root"></div>
@@ -12,20 +38,29 @@
       window.onload = function() {
 
         const InputBox = (props) => {
-          return React.createElement('input', {
-            type: 'text',
-            className: 'input-box',
-            value: props.text,
-            onChange: (e) => props.updateText(e.target.value)
-          });
+
+          return React.createElement('div', {className: 'input-box'},
+            React.createElement('input', {
+              type: 'text',
+              value: props.text,
+              onChange: (e) => props.updateText(e.target.value)
+            })
+          );
         }
 
         const GeneratedImage = (props) => {
           let imageElement = props.text;
           if (props.text.length > 0) {
-            imageElement = React.createElement('p', null, props.text);
+            imageElement = React.createElement('p', {id: 'cross-stitch-text'}, props.text);
           }
-          return React.createElement('div', null, imageElement);
+          return React.createElement('div', {id: 'cross-stitch'},
+            React.createElement('img', {
+              src: '/cross-stitch-bg.png',
+              alt: 'embroidery hoop with floral decoration',
+              id: 'bg-image'
+            }),
+            imageElement
+          );
         }
 
         class App extends React.Component {
@@ -38,12 +73,15 @@
             this.setState({ text: value });
           }
           render() {
-            return React.createElement(
-              'div',
-              null,
+            return React.createElement('div', null,
+              React.createElement('h1', null, 'Cross-Stitch Image Generator'),
               React.createElement('p', null, 'Enter in the text you\'d like to cross-stitch:'),
               React.createElement(InputBox, { text: this.state.text, updateText: this.updateText }),
-              React.createElement(GeneratedImage, { text: this.state.text })
+              React.createElement(GeneratedImage, { text: this.state.text }),
+              React.createElement('p', null, 'Take a screenshot to save your sampler!'),
+              React.createElement('p', null, 'Made with <3 by ',
+                React.createElement('a', { href: 'https://github.com/slohmes'}, '@slohmes'),
+              '.')
             );
           }
         }
