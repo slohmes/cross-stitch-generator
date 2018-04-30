@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Cross Stitch Generator</title>
     <script src="https://unpkg.com/react@15/dist/react.js"></script>
     <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
 </head>
@@ -10,37 +10,46 @@
     <div id="root"></div>
     <script>
       window.onload = function() {
-        class InputBox extends React.Component {
+
+        const InputBox = (props) => {
+          return React.createElement('input', {
+            type: 'text',
+            className: 'input-box',
+            value: props.text,
+            onChange: (e) => props.updateText(e.target.value)
+          });
+        }
+
+        const GeneratedImage = (props) => {
+          let imageElement = props.text;
+          if (props.text.length > 0) {
+            imageElement = React.createElement('p', null, props.text);
+          }
+          return React.createElement('div', null, imageElement);
+        }
+
+        class App extends React.Component {
           constructor(props) {
             super(props);
-            this.state = { inputValue: '' };
+            this.updateText = this.updateText.bind(this);
+            this.state = { text: ''};
           }
-          render() {
-            return React.createElement('input', {
-              type: 'text',
-              className: 'input-box',
-              value: this.state.inputValue,
-              onChange: function(evt) { this.updateInputValue(evt) }
-            });
+          updateText(value) {
+            this.setState({ text: value });
           }
-          updateInputValue(evt) {
-            this.setState({ inputValue: evt.target.value });
-          }
-        }
-        class Welcome extends React.Component {
           render() {
             return React.createElement(
-            'p',
-            null,
-            'Welcome home!',
-            React.createElement('div'),
-            React.createElement(InputBox)
-          );
-
+              'div',
+              null,
+              React.createElement('p', null, 'Enter in the text you\'d like to cross-stitch:'),
+              React.createElement(InputBox, { text: this.state.text, updateText: this.updateText }),
+              React.createElement(GeneratedImage, { text: this.state.text })
+            );
           }
         }
+
         ReactDOM.render(
-          React.createElement(Welcome),
+          React.createElement(App),
           document.getElementById('root')
         );
       };
