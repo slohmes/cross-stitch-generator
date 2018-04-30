@@ -1,22 +1,9 @@
-# JS Practice App
+# Cross Stitch Generator
 
-#### Current status:
+A web app to generate images of cross-stitch samplers with custom text.
 
-Following along with the book Web Development with Node and Express to create an example Node/Express app.
+#### Run
+`npm install`
+`npm run start`
 
-#### TODO:
-
-Add react, replace the plaintext responses in app.js with react-ified versions of the home, about, and 404 pages.
-
-
-#### Current tooling:
-
-* node
-
-
-#### What I'd like to add:
-
-* testing tooling: jasmine, nyc, istanbul
-* react
-* redux
-* webpack
+The app will start running on localhost:3000.
