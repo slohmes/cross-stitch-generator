@@ -1,17 +1,25 @@
 const puppeteer = require('puppeteer');
 
+const fs = require('fs');
+const dir = './tmp';
+
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+}
+
 (async () => {
   const browser = await puppeteer.launch({
-    //headless: false,
-    userDataDir: '/Users/sarahlohmeier/projects/js-sample-app/tmp/mockUserDataDir'
+    headless: false,
+    userDataDir: `${dir}/mockUserDataDir`//'/Users/sarahlohmeier/projects/js-sample-app/tmp/mockUserDataDir'
   });
   const page = await browser.newPage();
   await page.goto('http://localhost:3000');
-  await page.waitForFunction('document.querySelector("#demo").innerHTML.length > 0').catch(err => console.log("something's wrong", err));
-  await page.screenshot({path: 'tmp/localhost3000-4.png'}); // if there's already an image saved, what happens?
+  await page.waitForFunction('document.querySelector("p").innerHTML.length > 0').catch(err => console.log("something's wrong", err));
+  await page.screenshot({path: `${dir}/localhost3000-4.png`});
 
-  console.log("saved screenshot");
+  console.log('saved screenshot');
   await browser.close();
+  process.exit(0);
 })();
 
 // add in an else here - if something goes wrong, exit.

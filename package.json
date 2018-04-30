@@ -1,20 +1,21 @@
 {
-  "name": "js-sample-app",
+  "name": "cross-stitch-generator",
   "version": "1.0.0",
-  "description": "A learning-by-doing exploration of the JS ecosystem.",
+  "description": "Generates cross stitch patterns from text input",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "node test.js"
+    "test": "npm run start & node test.js && pkill -P $$"
   },
   "repository": {
     "type": "git",
-    "url": "js-sample-app"
+    "url": "cross-stitch-generator"
   },
   "author": "Sarah Lohmeier",
   "license": "ISC",
   "dependencies": {
     "express": "^4.14.1",
+    "npm": "^6.0.0",
     "puppeteer": "^0.12.0"
   }
 }

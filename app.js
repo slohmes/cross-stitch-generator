@@ -6,10 +6,11 @@ var path = require('path');
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
+app.use(express.static(__dirname + '/public/images'));
 
 app.get('/', function(request, response) {
 	response.type('text/html');
-	response.sendFile(path.join(__dirname+'/index.html'));
+	response.sendFile(path.join(__dirname+'/public/home.html'));
 });
 
 app.get('/about', function(request, response) {
@@ -19,9 +20,9 @@ app.get('/about', function(request, response) {
 
 // custom 404 page
 app.use(function(request, response) {
-	response.type('text/plain');
+	response.type('text/html');
 	response.status(404);
-	response.send('404 - Not Found');
+	response.sendFile(path.join(__dirname+'/public/404.html'));
 });
 
 // custom 500 page
