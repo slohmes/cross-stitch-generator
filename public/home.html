@@ -3,9 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
 </head>
 <body>
-    <p>Welcome home!</p>
-    <img src="/logo.jpg" alt="The truth is out there.">
+    <div id="root"></div>
+    <script>
+      window.onload = function() {
+        class InputBox extends React.Component {
+          constructor(props) {
+            super(props);
+            this.state = { inputValue: '' };
+          }
+          render() {
+            return React.createElement('input', {
+              type: 'text',
+              className: 'input-box',
+              value: this.state.inputValue,
+              onChange: function(evt) { this.updateInputValue(evt) }
+            });
+          }
+          updateInputValue(evt) {
+            this.setState({ inputValue: evt.target.value });
+          }
+        }
+        class Welcome extends React.Component {
+          render() {
+            return React.createElement(
+            'p',
+            null,
+            'Welcome home!',
+            React.createElement('div'),
+            React.createElement(InputBox)
+          );
+
+          }
+        }
+        ReactDOM.render(
+          React.createElement(Welcome),
+          document.getElementById('root')
+        );
+      };
+    </script>
 </body>
 </html>
